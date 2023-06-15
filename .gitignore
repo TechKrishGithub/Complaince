@@ -1,0 +1,28 @@
+node_modules/
+.expo/
+dist/
+npm-debug.*
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+*.orig.*
+web-build/
+
+# macOS
+.DS_Store
+
+#package locks
+*.locks
+.idea
+.yarn
+.package-lock.json
+
+# Temporary files created by Metro to check the health of the file watcher
+.metro-health-check*
+
+#local .prettierrc
+.prettierrc
+.vscode/settings.json
+.vscode/launch.json
