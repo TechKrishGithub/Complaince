@@ -13,7 +13,8 @@ const DropDownSearch = (props) => {
     selectedValue,
     maxHeight,
     width,
-    forPending
+    forPending,
+    myTest
   } = props;
   const [value, setValue] = useState(selectedValue ? selectedValue : null);
   const [isFocus, setIsFocus] = useState(false);
@@ -58,7 +59,7 @@ const DropDownSearch = (props) => {
           !isFocus ? (placeholderText ? placeholderText : "Select Item") : "..."
         }
         searchPlaceholder="Search..."
-        value={value}
+        value={myTest!==null?value:''}
         onFocus={() => setIsFocus(true)}
         onBlur={() => setIsFocus(false)}
         onChange={(item) => {

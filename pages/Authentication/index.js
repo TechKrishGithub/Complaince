@@ -21,8 +21,10 @@ const Authentication = () => {
       <Tab.Navigator
         tabBarPosition="top"
         style={{ backgroundColor: "#f4fbfd" }}
+
       >
-        <Tab.Screen name="Login" component={SignInScreen} />
+        <Tab.Screen name="Login" component={SignInScreen} 
+        />
       </Tab.Navigator>
     </View>
   );

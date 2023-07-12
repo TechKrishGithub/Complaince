@@ -14,7 +14,7 @@ import EditPage from "./EditPage";
 
 
 const GWDetailsPage = ({ route, navigation }) => {
-  const { complainceData, complainceDataEdit,permitNumberEdit ,seletedQuarter,permitNumber , complainceDataUpdated,scoresData} = route.params;
+  const { complainceData, complainceDataEdit,permitNumberEdit ,seletedQuarter,permitNumber , complainceDataUpdated,scoresData,year} = route.params;
 
 
 
@@ -78,6 +78,7 @@ const GWDetailsPage = ({ route, navigation }) => {
 
 
   useEffect(() => {
+    console.log(year)
     setLoading(true);
     setTimeout(()=>
     {
@@ -104,7 +105,7 @@ const GWDetailsPage = ({ route, navigation }) => {
         "CREATE TABLE IF NOT EXISTS ScoresTable (id INTEGER PRIMARY KEY AUTOINCREMENT,criteriaId varchar,criteriaName varchar,factorId varchar,maxScore INTEGER,question varchar,score integer,comment varchar,PermitNumber varchar )",
         )
       tx.executeSql(
-          "CREATE TABLE IF NOT EXISTS ComplianceFactersAfterUpdating (id INTEGER PRIMARY KEY AUTOINCREMENT,factorId varchar,factorName varchar,PermitNumber varchar, Quarter varchar,permitTypeId varchar)"
+          "CREATE TABLE IF NOT EXISTS ComplianceFactersAfterUpdating (id INTEGER PRIMARY KEY AUTOINCREMENT,factorId varchar,factorName varchar,PermitNumber varchar, Quarter varchar,year integer,permitTypeId varchar)"
       )
       })
   }
@@ -156,9 +157,6 @@ const GWDetailsPage = ({ route, navigation }) => {
 
   const dataInsert=()=>
   {
-    let Quarter='';
-    seletedQuarter==undefined?Quarter=seletedQuarterNew:Quarter=seletedQuarter;
-    console.log(Quarter)
     db.transaction(tx=>
       {
         tx.executeSql("select * from ComplianceFactersAfterUpdating where factorId=? AND PermitNumber=?",
@@ -171,8 +169,8 @@ const GWDetailsPage = ({ route, navigation }) => {
           }
           else
           {
-            tx.executeSql("INSERT INTO ComplianceFactersAfterUpdating(factorId,factorName,PermitNumber, Quarter,permitTypeId) values(?,?,?,?,?)",
-            [complainceData?.factorId,complainceData?.factorName,permitNumber,Quarter,complainceData?.permitTypeId],
+            tx.executeSql("INSERT INTO ComplianceFactersAfterUpdating(factorId,factorName,PermitNumber, Quarter,year,permitTypeId) values(?,?,?,?,?,?)",
+            [complainceData?.factorId,complainceData?.factorName,permitNumber,seletedQuarter,parseInt(year),complainceData?.permitTypeId],
             (tx,resultSet)=>
             {
               console.log('Data inserted successfully');
@@ -494,7 +492,7 @@ const GWDetailsPage = ({ route, navigation }) => {
 
       <View style={{ flex: 0.35 }}>
         <Button
-          title={`Total Score is ${totalScore === 0 ? 0 : totalScore}`}
+          title={`Total Score is ${totalScore === 0 ? 1 : totalScore}`}
           buttonStyle={{
             borderColor: "rgba(78, 116, 289, 1)",
           }}

@@ -1,14 +1,14 @@
 export default data = {
   siderBarNames: {},
   permitsList: [
-    { label: "BUL501757/2GWJDW 2013", value: "1" },
-    { label: "BUL501757/2GWJDX 2013", value: "2" },
-    { label: "BUL501757/2GWJDY 2013", value: "3" },
-    { label: "BUL501757/2GWJDZ 2013", value: "4" },
-    { label: "BUL501758/2GWJDR 2013", value: "5" },
-    { label: "BUL501752/2GWJDA 2013", value: "6" },
-    { label: "BUL501756/2GWJDB 2013", value: "7" },
-    { label: "BUL501759/2GWJDC 2013", value: "8" },
+    { label: "BUL501757/2CPJDW 2013", value: "1" },
+    { label: "BUL501757/2CPJDX 2013", value: "2" },
+    { label: "BUL501757/2CPJDY 2013", value: "3" },
+    { label: "BUL501757/2CPJDZ 2013", value: "4" },
+    { label: "BUL501758/2CPJDR 2013", value: "5" },
+    { label: "BUL501752/2CPJDA 2013", value: "6" },
+    { label: "BUL501756/2CPJDB 2013", value: "7" },
+    { label: "BUL501759/2CPJDC 2013", value: "8" },
   ],
   quarterList: [
     { label: "Q1 - Jul to Sept", value: "1" },

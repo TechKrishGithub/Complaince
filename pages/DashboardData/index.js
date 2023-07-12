@@ -3,11 +3,11 @@ import { View, Text, ScrollView, TouchableOpacity  } from 'react-native';
 import { Card, Icon, Button } from 'react-native-elements';
 import styles from './styles';
 import { AntDesign } from '@expo/vector-icons';
-
+import SyncingData from '../SyncData';
 
 
 const DashboardData = (props) => {
-  const { complFactData, navigation, complainceData, scoresData } = props;
+  const { complFactData, navigation, complainceData, scoresData,user } = props;
 
   const [expandedCard, setExpandedCard] = useState(null);
   const [expandedPermitNumbers, setExpandedPermitNumbers] = useState([]);
@@ -20,11 +20,13 @@ const DashboardData = (props) => {
     });
   };
 
-  const PendingOne=(factorId,permitNumber)=>
+  const PendingOne=(factorId,permitNumber,t,year)=>
   {
     navigation.navigate('GW Details Page', {
       complainceData: factorId,
-      permitNumber:permitNumber
+      permitNumber:permitNumber,
+      seletedQuarter:t,
+      year:year
     });
    
   }
@@ -67,6 +69,12 @@ const DashboardData = (props) => {
       }
     });
   };
+
+
+  const syncData=(permitNumber,matchingFactors)=>
+  {
+    console.log(permitNumber,matchingFactors,scoresData)
+  }
   
 
   return (
@@ -122,7 +130,11 @@ const DashboardData = (props) => {
                   return (
                     <View key={index} style={styles.match}>
                          <View style={styles.cardHeader}>
-                              <Text style={styles.cardTitle}></Text>
+                         <View style={styles.infoRow}>
+                        <Text style={styles.infoLabel}>Permit Number</Text>
+                        <Text style={styles.infoValue}>: {permitNumber}</Text>
+                        
+                      
                       {allFactorsPresent && (
                    isPermitNumberExpanded?
                  <Icon
@@ -145,23 +157,27 @@ const DashboardData = (props) => {
            />
                  )}
                  </View>
-                      <View style={styles.infoRow}>
-                        <Text style={styles.infoLabel}>Permit Number</Text>
-                        <Text style={styles.infoValue}>: {permitNumber}</Text>
-                        
-                      </View>
-                      <View style={styles.infoRow}>
-                           <Text style={styles.infoLabel}>User Name</Text>
-                           <Text style={styles.infoValue}>: WEIS</Text>
-                            </View>
+                 </View>
+                     
                             <View style={styles.infoRow}>
                            <Text style={styles.infoLabel}>Year</Text>
-                          <Text style={styles.infoValue}>: {new Date().getFullYear()}</Text>
+                          <Text style={styles.infoValue}>: {matchingFactors[0].year}</Text>
                            </View>
                            <View style={styles.infoRow}>
                            <Text style={styles.infoLabel}>Status</Text>
                           <Text style={[styles.infoValue,matchingFactors.length==Status.length?{color:'green'}:{color:'red'}]}>: {matchingFactors.length==Status.length?'Completed':'InProgress'}</Text>
                            </View>
+                           {
+                            matchingFactors.length==Status.length&&
+                           <SyncingData
+                           permitNumber={permitNumber}
+                           matchingFactors={matchingFactors}
+                           scoresData={scoresData}
+                           user={user}
+                           />
+                           }
+                          
+                         
                       {isPermitNumberExpanded && (
                         <View style={styles.infoContainer}>
                           {Status.map((factor) => 
@@ -196,20 +212,22 @@ const DashboardData = (props) => {
                             <View  style={styles.infoRow}>
                              <Text style={styles.infoLabel}>Quarter</Text>
                              <Text style={styles.infoValue}>: {completedFactors?completedFactors.Quarter:factor.Quarter}</Text>
+                          
                             </View>
-                          }
-                            
+                          }                           
 
                             <View  style={styles.infoRow}>
                             <Text style={styles.infoLabel}>Status</Text>
-                            {Completed?
+                            {Completed&&
                             
                             <Text style={[styles.infoValue,{color:'#3eae4f'}]}> :Compeleted</Text> 
-                            :
+                          }
+                          {
+                            !Completed&&
                             <TouchableOpacity 
                             style={styles.infoValue}
                             onPress={() => {
-                              PendingOne(factor,permitNumber);
+                              PendingOne(factor,permitNumber,matchingFactors[0].Quarter,matchingFactors[0].year);
                                 }}
                             >
                               <Text style={[styles.infoValue,{
@@ -222,6 +240,7 @@ const DashboardData = (props) => {
                               </Text>
                               </TouchableOpacity>
                           }
+                        
                           {Completed&&
                           <TouchableOpacity
                           onPress={()=>EditPress(completedFactors,permitNumber)}

@@ -64,7 +64,23 @@ const styles = StyleSheet.create({
     paddingLeft:4,
     fontWeight:'bold',
     color:'#8ba1d6'
-  }
+  },
+  btn:
+  {
+    backgroundColor:'#075eec',
+    paddingVertical:5,
+    paddingHorizontal:5,
+    borderWidth:1,
+    borderRadius:8,
+    borderColor:'#075eec',
+    justifyContent:'center',
+    alignItems:'center'
+  },
+  btnText:
+  {
+    fontWeight:'600',
+    color:'#fff'
+  },
 });
 
 export default styles;

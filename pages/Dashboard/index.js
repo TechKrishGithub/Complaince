@@ -16,6 +16,7 @@ const Dashboard=({navigation})=> {
   const [complFactData,setComplFactData]=useState([]);
   const [complainceData,setComplainceData]=useState([]);
   const [loading,setLoading]=useState(false);
+  const [user,setUser]=useState([]);
 
   
 
@@ -42,9 +43,13 @@ const Dashboard=({navigation})=> {
           (_, { rows })=>
           {
             setComplainceData(rows._array);
-            setLoading(false)
           }
           )
+          tx.executeSql(
+            'SELECT * FROM User_Master',
+            [],
+            (_, { rows }) => setUser(rows._array[0].userid)
+            )
       })
   }
 
@@ -53,6 +58,10 @@ const Dashboard=({navigation})=> {
   const onScreenFocus = useCallback(() => {
     getDetails();
     setLoading(true);
+    setTimeout(()=>
+    {
+      setLoading(false)
+    },500)
     setTimeout(()=>
     {
       getDetails();
@@ -65,6 +74,10 @@ const Dashboard=({navigation})=> {
   useEffect(()=>
   {
     setLoading(true);
+    setTimeout(()=>
+    {
+      setLoading(false)
+    },500)
     getDetails();
     setTimeout(()=>
     {
@@ -88,12 +101,13 @@ const Dashboard=({navigation})=> {
         />
       {complFactData.length>0?
         <View>
-          <DashboardData scoresData={scoresData} complFactData={complFactData} navigation={navigation} complainceData={complainceData}/>
+          <DashboardData scoresData={scoresData} complFactData={complFactData} navigation={navigation} complainceData={complainceData} user={user}/>
         </View>
        :
-       <View style={[styles.infoBlock,{margin:16}]}>
+       <View style={[styles.infoBlock,{margin:16,flexDirection:'row',justifyContent:'space-between'}]}>
           <Text style={styles.infoBlockHeading}>Compliance Applications</Text>
-       <Text style={{fontWeight:'bold',color:'#495309',marginLeft:20}}>Data Not Found !</Text>
+          <Text style={[styles.infoBlockHeading,{ fontWeight:'bold',color:'#8ba1d6'}]}>(0)</Text>
+       
        </View>
       }
       </View>

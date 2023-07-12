@@ -10,6 +10,7 @@ import GWDetailsPage from "./pages/GroundWaterComplaince/GWDetailsPage/index";
 import Authentication from "./pages/Authentication";
 import PinAccess from "./pages/LocalSecurity/PinAccess";
 import PinGeneration from "./pages/LocalSecurity/PinGeneration";
+import SignInScreen from "./pages/Authentication/SignIn";
 
 const Stack = createStackNavigator();
 
@@ -77,11 +78,13 @@ const App = () => {
               component={DrawerNavigator}
               options={{ headerShown: false }}
             />
-            <Stack.Screen name="GW Details Page" component={GWDetailsPage} />
+            <Stack.Screen name="GW Details Page" 
+              options={{ headerTitle: 'Complaince Details Page'}}
+            component={GWDetailsPage} />
             <Stack.Screen
             name="Authentication"
-            options={{ headerShown: false }}
-            component={Authentication}
+            options={{ headerShown: false}}
+            component={SignInScreen}
           />
           
           </>
@@ -91,7 +94,7 @@ const App = () => {
           <Stack.Screen
             name="Authentication"
             options={{ headerShown: false }}
-            component={Authentication}
+            component={SignInScreen}
           />
            <Stack.Screen
            name="PinGeneration" 
@@ -110,7 +113,9 @@ const App = () => {
             />
           
 
-            <Stack.Screen name="GW Details Page" component={GWDetailsPage} />
+            <Stack.Screen name="GW Details Page"
+              options={{ headerTitle: 'Complaince Details Page'}}
+            component={GWDetailsPage} />
             
           </>
         )}

@@ -295,7 +295,7 @@ const EditPage=(props)=>
 
       <View style={{ flex: 0.35 }}>
         <Button
-          title={`Total Score is ${totalScore === 0 ? 0 : totalScore}`}
+          title={`Total Score is ${totalScore === 0 ? 1 : totalScore}`}
           buttonStyle={{
             borderColor: "rgba(78, 116, 289, 1)",
           }}

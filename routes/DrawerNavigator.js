@@ -234,7 +234,7 @@ const DrawerNavigator = () => {
         component={WasteWaterComplaince}
       />
 
-      <Drawer.Screen
+      {/* <Drawer.Screen
         name="Waste Water Discharge Permit Holders"
         options={{
           drawerLabel: "Waste Water Discharge Permit Holders",
@@ -251,7 +251,7 @@ const DrawerNavigator = () => {
           ),
         }}
         component={WasteWaterDischargePermitHolders}
-      />
+      /> */}
       <Drawer.Screen
         name="Logout"
         options={{

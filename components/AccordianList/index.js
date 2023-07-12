@@ -2,21 +2,21 @@ import React, { useEffect, useState } from "react";
 import { View, ScrollView,Text,Animated } from "react-native";
 import { ListItem } from "@rneui/themed";
 import { Entypo } from "@expo/vector-icons";
+import db from "../../permitsDb";
+import { Feather } from '@expo/vector-icons';
 
 //import data from "../../constants";
 
 const AccordianList = (props) => {
-  const { navigation, data,seletedQuarter, permitNumber} = props;
+  const { navigation, data,seletedQuarter, permitNumber,forTick,year} = props;
   const [expanded, setExpanded] = useState(false);
   const [error,setError]=useState('');
   const [count,setCount]=useState(1);
   const [countForPN,setCountForPN]=useState(1);
   const [textShake] = useState(new Animated.Value(0));
 
-  useEffect(()=>
-  { 
-    console.log(data)
-  },[])
+ 
+
 
   const handleButtonClick = () => {
     Animated.sequence([
@@ -32,8 +32,10 @@ const AccordianList = (props) => {
   };
 
 
+  const filteredMYTick=forTick.filter(v=>v.PermitNumber === permitNumber)
+
   const log = (l, i) => {
-    navigation.navigate("GW Details Page", { complainceData: l, id: i ,seletedQuarter:seletedQuarter, permitNumber:permitNumber});
+    navigation.navigate("GW Details Page", { complainceData: l, id: i ,seletedQuarter:seletedQuarter, permitNumber:permitNumber,year:year});
   };
 
   return (
@@ -93,7 +95,11 @@ const AccordianList = (props) => {
       >
         <ScrollView>
           {data &&
-            data?.map((l, i) => (
+            data?.map((l, i) => 
+            {
+              
+              const myTick=filteredMYTick.find(v=>v.factorId === l.factorId);
+              return(
               <ListItem
                 key={i}
                 onPress={() => {
@@ -103,10 +109,15 @@ const AccordianList = (props) => {
                 animation={"350ms"}
               >
                 <ListItem.Content>
-                  <ListItem.Title
-                    style={{ fontSize: 16, fontWeight: "600", padding: 4 }}
-                  >
-                    {l?.factorName}
+                  <ListItem.Title style={{padding:10}}>
+                     <View style={{flexDirection:'row'}}>
+                    <Text>{l?.factorName}</Text>
+                    {myTick&&
+                    <View style={{paddingLeft:20}}>
+                    <Feather name="check-circle" size={20} color="green"/>
+                    </View>
+                    }
+                  </View>
                   </ListItem.Title>
                   <ListItem.Subtitle
                     style={{ fontSize: 14, fontWeight: "300", padding: 4 }}
@@ -117,11 +128,12 @@ const AccordianList = (props) => {
 
                 <ListItem.Chevron />
               </ListItem>
-            ))}
+            )})}
         </ScrollView>
       </ListItem.Accordion>
     </View>
   );
+          
 };
 
 export default AccordianList;
